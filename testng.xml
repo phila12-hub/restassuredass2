@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    TestNG Suite Configuration - Testimonial Collection Assessment
+    =============================================================
+    This suite runs all REST Assured test classes in the correct execution order.
+
+    Test execution order (controlled by priority in each @Test method):
+      Priority 1 - LoginTest               : Authenticate and extract Bearer token
+      Priority 2 - CreateTestimonialTest   : Create a testimonial (positive)
+      Priority 3 - UpdateTestimonialTest   : Update the created testimonial (positive)
+      Priority 4 - DeleteTestimonialTest   : Delete the created testimonial (positive)
+      Priority 5 - NegativeTestimonialTest : Create with invalid token (negative - 401)
+      Priority 6 - NegativeTestimonialTest : Update with dummy ID (negative - 404)
+
+    Note: All test classes extend BaseTest which shares the authToken and
+    testimonialId variables across the suite.
+-->
+<suite name="Testimonial Collection Assessment Suite" verbose="1">
+
+    <test name="Testimonial API Tests">
+        <classes>
+            <!-- Login first to obtain the auth token -->
+            <class name="org.example.tests.LoginTest"/>
+
+            <!-- Positive test scenarios - CRUD operations -->
+            <class name="org.example.tests.CreateTestimonialTest"/>
+            <class name="org.example.tests.UpdateTestimonialTest"/>
+            <class name="org.example.tests.DeleteTestimonialTest"/>
+
+            <!-- Negative test scenarios - error handling -->
+            <class name="org.example.tests.NegativeTestimonialTest"/>
+        </classes>
+    </test>
+
+</suite>
+
